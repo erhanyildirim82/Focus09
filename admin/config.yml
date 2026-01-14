@@ -1,0 +1,102 @@
+backend:
+  name: git-gateway
+  branch: main  # veya master - repo'ndaki ana branch adı
+
+# Yüklenen medya dosyalarının kaydedileceği klasör
+media_folder: "images"
+public_folder: "/images"
+
+# Türkçe arayüz
+locale: 'tr'
+
+# Site ayarları ve içerikler
+collections:
+  # ===== GENEL AYARLAR =====
+  - name: "settings"
+    label: "Site Ayarları"
+    files:
+      - name: "general"
+        label: "Genel Bilgiler"
+        file: "_data/settings.json"
+        fields:
+          - { label: "Site Başlığı", name: "site_title", widget: "string", default: "FOCUS 09" }
+          - { label: "Slogan", name: "slogan", widget: "string", default: "Film Prodüksiyon & Dijital Çözümler" }
+          - { label: "Hakkımızda Açıklama", name: "about_description", widget: "text" }
+          - label: "İletişim Bilgileri"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Telefon 1", name: "phone1", widget: "string" }
+              - { label: "Telefon 2", name: "phone2", widget: "string" }
+              - { label: "E-posta 1", name: "email1", widget: "string" }
+              - { label: "E-posta 2", name: "email2", widget: "string" }
+              - { label: "Adres", name: "address", widget: "string" }
+              - { label: "Instagram", name: "instagram", widget: "string" }
+              - { label: "WhatsApp Numarası (Başında 90)", name: "whatsapp", widget: "string" }
+
+  # ===== EKİP ÜYELERİ =====
+  - name: "team"
+    label: "Ekip Üyeleri"
+    folder: "_data/team"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "İsim", name: "name", widget: "string" }
+      - { label: "Kısaltma (Avatar için)", name: "initials", widget: "string", hint: "Örn: AY, EY" }
+      - { label: "Rol/Pozisyon", name: "role", widget: "string" }
+      - { label: "Açıklama", name: "description", widget: "text" }
+      - label: "Yetenekler"
+        name: "skills"
+        widget: "list"
+        field: { label: "Yetenek", name: "skill", widget: "string" }
+      - { label: "Sıralama", name: "order", widget: "number", default: 1 }
+
+  # ===== HİZMETLER =====
+  - name: "services"
+    label: "Hizmetler"
+    folder: "_data/services"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Kategori Adı", name: "category", widget: "string", hint: "Örn: Reklam-Tanıtım Film Çekimi" }
+      - { label: "Kategori İkonu", name: "icon", widget: "string", hint: "Emoji kullanın: 🎬 📱 💻" }
+      - { label: "Sıralama", name: "order", widget: "number", default: 1 }
+      - label: "Paketler"
+        name: "packages"
+        widget: "list"
+        fields:
+          - { label: "Paket Adı", name: "name", widget: "string" }
+          - { label: "Fiyat", name: "price", widget: "string", hint: "Örn: 6.000 TL veya 2.500 TL/ay" }
+          - { label: "Öne Çıkan mı?", name: "featured", widget: "boolean", default: false }
+          - label: "Özellikler"
+            name: "features"
+            widget: "list"
+            field: { label: "Özellik", name: "feature", widget: "string" }
+
+  # ===== YOUTUBE VİDEOLARI =====
+  - name: "videos"
+    label: "YouTube Videoları"
+    folder: "_data/videos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Video Başlığı", name: "title", widget: "string" }
+      - { label: "YouTube Video ID", name: "youtube_id", widget: "string", hint: "URL'deki v= sonrasındaki kod. Örn: dQw4w9WgXcQ" }
+      - { label: "Açıklama", name: "description", widget: "text", required: false }
+      - { label: "Kategori", name: "category", widget: "select", options: ["Reklam Filmi", "Tanıtım", "Kısa Film", "Diğer"] }
+      - { label: "Öne Çıkan mı?", name: "featured", widget: "boolean", default: false }
+      - { label: "Yayın Tarihi", name: "date", widget: "datetime" }
+      - { label: "Sıralama", name: "order", widget: "number", default: 1 }
+
+  # ===== REFERANSLAR / MÜŞTERİLER =====
+  - name: "clients"
+    label: "Referanslar"
+    folder: "_data/clients"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Müşteri/Firma Adı", name: "name", widget: "string" }
+      - { label: "Logo", name: "logo", widget: "image", required: false }
+      - { label: "Açıklama", name: "description", widget: "text", required: false }
+      - { label: "Web Sitesi", name: "website", widget: "string", required: false }
+      - { label: "Sıralama", name: "order", widget: "number", default: 1 }
