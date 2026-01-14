@@ -7,6 +7,9 @@
     <meta name="keywords" content="film prodüksiyon, reklam filmi, sosyal medya yönetimi, web tasarım, manisa, aydın, focus09">
     <title>FOCUS 09 | Film Prodüksiyon & Dijital Çözümler</title>
     
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -290,7 +293,7 @@
 
         .glitch::before,
         .glitch::after {
-            content: 'FOCUS 09';
+            content: attr(data-text);
             position: absolute;
             top: 0;
             left: 0;
@@ -699,6 +702,76 @@
             box-shadow: 0 10px 20px rgba(255, 107, 0, 0.3);
         }
 
+        /* Videos Section */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.2);
+        }
+
+        .video-card.featured {
+            border-color: var(--primary-color);
+            background: rgba(255, 107, 0, 0.05);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-info {
+            padding: 25px;
+        }
+
+        .video-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .video-category {
+            display: inline-block;
+            background: rgba(255, 107, 0, 0.2);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .video-description {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
         /* Contact Section */
         .contact-content {
             display: grid;
@@ -865,9 +938,32 @@
             transform: translateY(0);
         }
 
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-gray);
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
-            /* Hide cursor on mobile */
             .cursor,
             .cursor-follower {
                 display: none;
@@ -905,7 +1001,8 @@
 
             .services-grid,
             .about-content,
-            .contact-content {
+            .contact-content,
+            .videos-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
@@ -941,12 +1038,13 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="nav-logo">
-            <img src="logo.png" alt="Focus09 Logo" style="height: 40px; width: auto; vertical-align: middle; margin-right: 10px;">
-            FOCUS 09
+                <img src="logo.png" alt="Focus09 Logo" style="height: 40px; width: auto; vertical-align: middle; margin-right: 10px;">
+                <span id="site-title">FOCUS 09</span>
             </a>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link active">Ana Sayfa</a></li>
                 <li><a href="#about" class="nav-link">Hakkımızda</a></li>
+                <li><a href="#videos" class="nav-link">Videolar</a></li>
                 <li><a href="#services" class="nav-link">Hizmetler</a></li>
                 <li><a href="#contact" class="nav-link">İletişim</a></li>
             </ul>
@@ -961,8 +1059,8 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1 class="hero-title glitch">FOCUS 09</h1>
-            <p class="hero-subtitle">Film Prodüksiyon & Dijital Çözümler</p>
+            <h1 class="hero-title glitch" data-text="FOCUS 09" id="hero-title">FOCUS 09</h1>
+            <p class="hero-subtitle" id="hero-subtitle">Film Prodüksiyon & Dijital Çözümler</p>
             <div class="cta-container">
                 <a href="#services" class="cta-button cta-primary">Hizmetlerimiz</a>
                 <a href="#contact" class="cta-button cta-secondary">İletişime Geç</a>
@@ -974,41 +1072,21 @@
     <section class="section" id="about">
         <div class="container">
             <h2 class="section-title">Hakkımızda</h2>
-            <p style="text-align: center; font-size: 20px; color: var(--text-gray); max-width: 800px; margin: 0 auto 60px;">
+            <p id="about-description" style="text-align: center; font-size: 20px; color: var(--text-gray); max-width: 800px; margin: 0 auto 60px;">
                 Yaratıcı fikirlerinizi dijital gerçekliğe dönüştürüyoruz. Focus09 olarak, profesyonel film prodüksiyonu ve dijital çözümler sunuyoruz.
             </p>
-            <div class="about-content">
-                <div class="team-member fade-in">
-                    <div class="member-avatar">AY</div>
-                    <h3 class="member-name">Aydın Yücel</h3>
-                    <p class="member-role">Film Prodüksiyon Uzmanı</p>
-                    <p class="member-description">
-                        Profesyonel kamera operatörlüğü ve film prodüksiyonu konusunda uzman olan Aydın, yaratıcı vizyonu ve teknik bilgisiyle projelerinize hayat veriyor.
-                    </p>
-                    <div class="member-skills">
-                        <span class="skill-tag">Kamera</span>
-                        <span class="skill-tag">Görüntü Yönetimi</span>
-                        <span class="skill-tag">Film Çekimi</span>
-                        <span class="skill-tag">Video Prodüksiyon</span>
-                        <span class="skill-tag">Kurgu</span>
-                    </div>
-                </div>
+            <div class="about-content" id="team-container">
+                <div class="loading">Ekip bilgileri yükleniyor</div>
+            </div>
+        </div>
+    </section>
 
-                <div class="team-member fade-in">
-                    <div class="member-avatar">EY</div>
-                    <h3 class="member-name">Erhan Yıldırım</h3>
-                    <p class="member-role">Dijital Çözümler Uzmanı</p>
-                    <p class="member-description">
-                        Fotoğraf sanatı ve dijital tasarım konularında deneyimli olan Erhan, web tasarımı ve dijital pazarlama stratejileriyle markanızı güçlendiriyor.
-                    </p>
-                    <div class="member-skills">
-                        <span class="skill-tag">Fotoğraf</span>
-                        <span class="skill-tag">Web Tasarım</span>
-                        <span class="skill-tag">Grafik Tasarım</span>
-                        <span class="skill-tag">Dijital Pazarlama</span>
-                        <span class="skill-tag">Uygulama Geliştirme</span>
-                    </div>
-                </div>
+    <!-- Videos Section -->
+    <section class="section" id="videos">
+        <div class="container">
+            <h2 class="section-title">Videolarımız</h2>
+            <div class="videos-grid" id="videos-container">
+                <div class="loading">Videolar yükleniyor</div>
             </div>
         </div>
     </section>
@@ -1017,223 +1095,22 @@
     <section class="section" id="services">
         <div class="container">
             <h2 class="section-title">Hizmetlerimiz</h2>
-            
-            <!-- Film Prodüksiyon -->
-            <div class="service-category">
-                <h3 class="category-title">
-                    <span class="category-icon">🎬</span>
-                    Reklam-Tanıtım Film Çekimi
-                </h3>
-                <div class="services-grid">
-                    <div class="service-card fade-in">
-                        <h4 class="service-name">Temel Paket</h4>
-                        <div class="service-price">6.000 TL</div>
-                        <ul class="service-features">
-                            <li>1 günlük çekim (8 saat)</li>
-                            <li>Profesyonel kamera ekipmanı</li>
-                            <li>Temel ışıklandırma</li>
-                            <li>Temel ses kaydı</li>
-                            <li>1-2 dakikalık montajlı video</li>
-                            <li>2 revizyon hakkı</li>
-                        </ul>
-                        <a href="#contact" class="service-button">Teklif Al</a>
-                    </div>
-
-                    <div class="service-card featured fade-in">
-                        <h4 class="service-name">Standart Paket</h4>
-                        <div class="service-price">11.000 TL</div>
-                        <ul class="service-features">
-                            <li>2 günlük çekim (toplam 16 saat)</li>
-                            <li>Profesyonel kamera ve ışık ekipmanları</li>
-                            <li>Profesyonel ses kaydı</li>
-                            <li>2-3 dakikalık montajlı video</li>
-                            <li>3 revizyon hakkı</li>
-                            <li>Sosyal medya için kısa versiyonlar</li>
-                        </ul>
-                        <a href="#contact" class="service-button">Teklif Al</a>
-                    </div>
-
-                    <div class="service-card fade-in">
-                        <h4 class="service-name">Premium Paket</h4>
-                        <div class="service-price">18.000 TL</div>
-                        <ul class="service-features">
-                            <li>3 günlük çekim (toplam 24 saat)</li>
-                            <li>Tam profesyonel ekipman seti</li>
-                            <li>Profesyonel ses kaydı ve ses tasarımı</li>
-                            <li>Senaryo desteği</li>
-                            <li>3-5 dakikalık montajlı video</li>
-                            <li>Sınırsız revizyon hakkı</li>
-                            <li>Tüm sosyal medya platformları için özel versiyonlar</li>
-                        </ul>
-                        <a href="#contact" class="service-button">Teklif Al</a>
-                    </div>
-                </div>
+            <div id="services-container">
+                <div class="loading">Hizmetler yükleniyor</div>
             </div>
-
-            <!-- Sosyal Medya Yönetimi -->
-            <div class="service-category">
-                <h3 class="category-title">
-                    <span class="category-icon">📱</span>
-                    Sosyal Medya Yönetimi
-                </h3>
-                <div class="services-grid">
-                    <div class="service-card fade-in">
-                        <h4 class="service-name">Başlangıç Paketi</h4>
-                        <div class="service-price">2.500 TL<small>/ay</small></div>
-                        <ul class="service-features">
-                            <li>2 sosyal medya platformu yönetimi</li>
-                            <li>Haftalık 6 içerik paylaşımı</li>
-                            <li>Aylık analiz raporu</li>
-                            <li>Yorumlara cevap verme</li>
-                        </ul>
-                        <a href="#contact" class="service-button">Teklif Al</a>
-                    </div>
-
-                    <div class="service-card featured fade-in">
-                        <h4 class="service-name">Gelişmiş Paket</h4>
-                        <div class="service-price">5.000 TL<small>/ay</small></div>
-                        <ul class="service-features">
-                            <li>3 sosyal medya platformu yönetimi</li>
-                            <li>Haftalık 10 içerik paylaşımı</li>
-                            <li>Özel grafik tasarımlar</li>
-                            <li>Aylık detaylı analiz raporu</li>
-                            <li>7/24 yorum ve mesaj yönetimi</li>
-                            <li>Aylık strateji toplantısı</li>
-                        </ul>
-                        <a href="#contact" class="service-button">Teklif Al</a>
-                    </div>
-
-                    <div class="service-card fade-in">
-                        <h4 class="service-name">Kurumsal Paket</h4>
-                        <div class="service-price">8.000 TL<small>/ay</small></div>
-                        <ul class="service-features">
-                            <li>5 sosyal medya platformu yönetimi</li>
-                            <li>Günlük içerik paylaşımı</li>
-                            <li>Özel video ve grafik içerikler</li>
-                            <li>Reklamların yönetimi</li>
-                            <li>Rakip analizi</li>
-                            <li>Haftalık detaylı raporlama</li>
-                            <li>Kriz yönetimi</li>
-                        </ul>
-                        <a href="#contact" class="service-button">Teklif Al</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Web Tasarım -->
-            <div class="service-category">
-                <h3 class="category-title">
-                    <span class="category-icon">💻</span>
-                    Web Tasarım & Geliştirme
-                </h3>
-                <div class="services-grid">
-                    <div class="service-card fade-in">
-                        <h4 class="service-name">Temel Web Sitesi</h4>
-                        <div class="service-price">10.000 TL</div>
-                        <ul class="service-features">
-                            <li>5 sayfalık responsive tasarım</li>
-                            <li>WordPress altyapısı</li>
-                            <li>Temel SEO ayarları</li>
-                            <li>İletişim formu</li>
-                            <li>Sosyal medya entegrasyonu</li>
-                            <li>1 ay ücretsiz teknik destek</li>
-                        </ul>
-                        <a href="#contact" class="service-button">Teklif Al</a>
-                    </div>
-
-                    <div class="service-card featured fade-in">
-                        <h4 class="service-name">E-Ticaret Paketi</h4>
-                        <div class="service-price">20.000 TL</div>
-                        <ul class="service-features">
-                            <li>Tam fonksiyonel e-ticaret sitesi</li>
-                            <li>50 ürüne kadar giriş</li>
-                            <li>Ödeme sistemi entegrasyonu</li>
-                            <li>Mobil uyumlu tasarım</li>
-                            <li>Kapsamlı SEO çalışması</li>
-                            <li>3 ay ücretsiz teknik destek</li>
-                            <li>Temel dijital pazarlama danışmanlığı</li>
-                        </ul>
-                        <a href="#contact" class="service-button">Teklif Al</a>
-                    </div>
-
-                    <div class="service-card fade-in">
-                        <h4 class="service-name">Özel Kurumsal Site</h4>
-                        <div class="service-price">30.000 TL</div>
-                        <ul class="service-features">
-                            <li>Tamamen özel tasarım</li>
-                            <li>Sınırsız sayfa</li>
-                            <li>İleri düzey SEO optimizasyonu</li>
-                            <li>Çoklu dil desteği</li>
-                            <li>Özel fonksiyonlar ve entegrasyonlar</li>
-                            <li>6 ay ücretsiz teknik destek</li>
-                            <li>Dijital pazarlama stratejisi</li>
-                        </ul>
-                        <a href="#contact" class="service-button">Teklif Al</a>
-                    </div>
-                </div>
+            <div style="text-align: center; color: var(--text-gray); margin-top: 40px; font-size: 14px;">
+                * Belirtilen fiyatlara KDV dahil değildir.
             </div>
         </div>
     </section>
-
-    <div style="text-align: center; color: var(--text-gray); margin-top: 40px; font-size: 14px;">
-        * Belirtilen fiyatlara KDV dahil değildir.
-    </div>
 
     <!-- Contact Section -->
     <section class="section" id="contact">
         <div class="container">
             <h2 class="section-title">İletişim</h2>
             <div class="contact-content">
-                <div class="contact-info fade-in">
-                    <div class="info-item">
-                        <span class="info-icon">📞</span>
-                        <div class="info-content">
-                            <h4>Telefon</h4>
-                            <p>
-                                <a href="tel:+905510065757">+90 551 006 57 57</a><br>
-                                <a href="tel:+905452891982">+90 545 289 19 82</a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <span class="info-icon">✉️</span>
-                        <div class="info-content">
-                            <h4>E-posta</h4>
-                            <p>
-                                <a href="mailto:aydinyucel06@gmail.com">aydin@focus09</a><br>
-                                <a href="mailto:mail.beworks@gmail.com">erhan@focus09</a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <span class="info-icon">📍</span>
-                        <div class="info-content">
-                            <h4>Adres</h4>
-                            <p>Aydın, İzmir ve Manisa, Türkiye</p>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <span class="info-icon">🕐</span>
-                        <div class="info-content">
-                            <h4>Çalışma Saatleri</h4>
-                            <p>
-                                Pazartesi - Cuma: 09:00 - 18:00<br>
-                                Cumartesi: 10:00 - 16:00
-                            </p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-icon">📷</span>
-                        <div class="info-content">
-                            <h4>Instagram</h4>
-                            <p>
-                                <a href="https://www.instagram.com/focus09film/" target="_blank" rel="noopener">@focus09film</a>
-                            </p>
-                        </div>
-                    </div>
+                <div class="contact-info fade-in" id="contact-info">
+                    <div class="loading">İletişim bilgileri yükleniyor</div>
                 </div>
 
                 <div class="contact-form fade-in">
@@ -1285,11 +1162,237 @@
     </footer>
 
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/905510065757?text=Merhaba, Focus09'dan bilgi almak istiyorum." class="whatsapp-float" target="_blank" aria-label="WhatsApp ile iletişime geç">
+    <a href="#" class="whatsapp-float" id="whatsapp-btn" target="_blank" aria-label="WhatsApp ile iletişime geç">
         <span style="font-size: 35px;">💬</span>
     </a>
 
     <script>
+        // =============================================
+        // CMS VERİLERİNİ YÜKLE
+        // =============================================
+        
+        // JSON dosyalarını yükleyen yardımcı fonksiyon
+        async function loadJSON(path) {
+            try {
+                const response = await fetch(path);
+                if (!response.ok) throw new Error('Dosya bulunamadı');
+                return await response.json();
+            } catch (error) {
+                console.warn(`${path} yüklenemedi:`, error);
+                return null;
+            }
+        }
+
+        // Tüm JSON dosyalarını bir klasörden yükle
+        async function loadAllFromFolder(folderPath, fileList) {
+            const results = [];
+            for (const file of fileList) {
+                const data = await loadJSON(`${folderPath}/${file}`);
+                if (data) results.push(data);
+            }
+            return results.sort((a, b) => (a.order || 0) - (b.order || 0));
+        }
+
+        // Site ayarlarını yükle
+        async function loadSettings() {
+            const settings = await loadJSON('/_data/settings.json');
+            if (settings) {
+                // Site başlığı
+                if (settings.site_title) {
+                    document.getElementById('site-title').textContent = settings.site_title;
+                    document.getElementById('hero-title').textContent = settings.site_title;
+                    document.getElementById('hero-title').setAttribute('data-text', settings.site_title);
+                }
+                // Slogan
+                if (settings.slogan) {
+                    document.getElementById('hero-subtitle').textContent = settings.slogan;
+                }
+                // Hakkımızda
+                if (settings.about_description) {
+                    document.getElementById('about-description').textContent = settings.about_description;
+                }
+                // İletişim bilgileri
+                if (settings.contact) {
+                    renderContactInfo(settings.contact);
+                }
+            }
+        }
+
+        // İletişim bilgilerini render et
+        function renderContactInfo(contact) {
+            const container = document.getElementById('contact-info');
+            container.innerHTML = `
+                <div class="info-item">
+                    <span class="info-icon">📞</span>
+                    <div class="info-content">
+                        <h4>Telefon</h4>
+                        <p>
+                            <a href="tel:${contact.phone1?.replace(/\s/g, '')}">${contact.phone1 || ''}</a><br>
+                            <a href="tel:${contact.phone2?.replace(/\s/g, '')}">${contact.phone2 || ''}</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">✉️</span>
+                    <div class="info-content">
+                        <h4>E-posta</h4>
+                        <p>
+                            <a href="mailto:${contact.email1}">${contact.email1 || ''}</a><br>
+                            <a href="mailto:${contact.email2}">${contact.email2 || ''}</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">📍</span>
+                    <div class="info-content">
+                        <h4>Adres</h4>
+                        <p>${contact.address || ''}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">🕐</span>
+                    <div class="info-content">
+                        <h4>Çalışma Saatleri</h4>
+                        <p>Pazartesi - Cuma: 09:00 - 18:00<br>Cumartesi: 10:00 - 16:00</p>
+                    </div>
+                </div>
+                ${contact.instagram ? `
+                <div class="info-item">
+                    <span class="info-icon">📷</span>
+                    <div class="info-content">
+                        <h4>Instagram</h4>
+                        <p><a href="https://www.instagram.com/${contact.instagram}/" target="_blank" rel="noopener">@${contact.instagram}</a></p>
+                    </div>
+                </div>
+                ` : ''}
+            `;
+
+            // WhatsApp butonu
+            if (contact.whatsapp) {
+                document.getElementById('whatsapp-btn').href = 
+                    `https://wa.me/${contact.whatsapp}?text=Merhaba, Focus09'dan bilgi almak istiyorum.`;
+            }
+        }
+
+        // Ekip üyelerini yükle
+        async function loadTeam() {
+            const container = document.getElementById('team-container');
+            
+            // Dosya listesini al (gerçek projede bu dinamik olmalı)
+            const teamFiles = ['aydin-yucel.json', 'erhan-yildirim.json'];
+            const team = await loadAllFromFolder('/_data/team', teamFiles);
+            
+            if (team.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-gray);">Ekip bilgisi bulunamadı.</p>';
+                return;
+            }
+
+            container.innerHTML = team.map(member => `
+                <div class="team-member fade-in">
+                    <div class="member-avatar">${member.initials}</div>
+                    <h3 class="member-name">${member.name}</h3>
+                    <p class="member-role">${member.role}</p>
+                    <p class="member-description">${member.description}</p>
+                    <div class="member-skills">
+                        ${member.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Animasyonları tetikle
+            setTimeout(() => {
+                container.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+            }, 100);
+        }
+
+        // Videoları yükle
+        async function loadVideos() {
+            const container = document.getElementById('videos-container');
+            
+            const videoFiles = ['tanitim-filmi.json'];
+            const videos = await loadAllFromFolder('/_data/videos', videoFiles);
+            
+            if (videos.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-gray);">Henüz video eklenmemiş.</p>';
+                return;
+            }
+
+            container.innerHTML = videos.map(video => `
+                <div class="video-card ${video.featured ? 'featured' : ''} fade-in">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/${video.youtube_id}" 
+                            title="${video.title}"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">${video.category}</span>
+                        <h3 class="video-title">${video.title}</h3>
+                        ${video.description ? `<p class="video-description">${video.description}</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            setTimeout(() => {
+                container.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+            }, 100);
+        }
+
+        // Hizmetleri yükle
+        async function loadServices() {
+            const container = document.getElementById('services-container');
+            
+            const serviceFiles = ['01-film-cekimi.json', '02-sosyal-medya.json', '03-web-tasarim.json'];
+            const services = await loadAllFromFolder('/_data/services', serviceFiles);
+            
+            if (services.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-gray);">Hizmet bilgisi bulunamadı.</p>';
+                return;
+            }
+
+            container.innerHTML = services.map(service => `
+                <div class="service-category">
+                    <h3 class="category-title">
+                        <span class="category-icon">${service.icon}</span>
+                        ${service.category}
+                    </h3>
+                    <div class="services-grid">
+                        ${service.packages.map(pkg => `
+                            <div class="service-card ${pkg.featured ? 'featured' : ''} fade-in">
+                                <h4 class="service-name">${pkg.name}</h4>
+                                <div class="service-price">${pkg.price.includes('/') ? pkg.price.replace('/', '<small>/') + '</small>' : pkg.price}</div>
+                                <ul class="service-features">
+                                    ${pkg.features.map(f => `<li>${f}</li>`).join('')}
+                                </ul>
+                                <a href="#contact" class="service-button">Teklif Al</a>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            setTimeout(() => {
+                container.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+            }, 100);
+        }
+
+        // Sayfa yüklendiğinde tüm verileri yükle
+        document.addEventListener('DOMContentLoaded', async () => {
+            await Promise.all([
+                loadSettings(),
+                loadTeam(),
+                loadVideos(),
+                loadServices()
+            ]);
+        });
+
+        // =============================================
+        // SAYFA ETKİLEŞİMLERİ
+        // =============================================
+
         // Custom Cursor
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
@@ -1305,22 +1408,22 @@
         });
 
         // Cursor hover effects
-        const hoverElements = document.querySelectorAll('a, button, .service-card, .team-member, .nav-link');
-        
-        hoverElements.forEach(elem => {
-            elem.addEventListener('mouseenter', () => {
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.matches('a, button, .service-card, .team-member, .nav-link, .video-card')) {
                 cursor.style.transform = 'scale(1.5)';
                 cursor.style.borderColor = 'var(--primary-color)';
                 follower.style.transform = 'scale(1.5)';
                 follower.style.backgroundColor = 'rgba(255, 107, 0, 0.5)';
-            });
-            
-            elem.addEventListener('mouseleave', () => {
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.matches('a, button, .service-card, .team-member, .nav-link, .video-card')) {
                 cursor.style.transform = 'scale(1)';
                 cursor.style.borderColor = 'var(--text-light)';
                 follower.style.transform = 'scale(1)';
                 follower.style.backgroundColor = 'rgba(255, 107, 0, 0.3)';
-            });
+            }
         });
 
         // Mobile Menu Toggle
@@ -1373,7 +1476,6 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    // Close mobile menu if open
                     navMenu.classList.remove('active');
                 }
             });
@@ -1399,18 +1501,32 @@
 
         // Form Submission Success Message
         const form = document.querySelector('form[name="contact"]');
-        form.addEventListener('submit', (e) => {
-            // Netlify handles the actual submission
-            setTimeout(() => {
-                form.innerHTML = `
-                    <div style="text-align: center; padding: 40px;">
-                        <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
-                        <h3 style="font-size: 28px; margin-bottom: 15px; color: var(--text-light);">Mesajınız Gönderildi!</h3>
-                        <p style="color: var(--text-gray); font-size: 18px;">En kısa sürede size dönüş yapacağız.</p>
-                    </div>
-                `;
-            }, 500);
-        });
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                setTimeout(() => {
+                    form.innerHTML = `
+                        <div style="text-align: center; padding: 40px;">
+                            <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
+                            <h3 style="font-size: 28px; margin-bottom: 15px; color: var(--text-light);">Mesajınız Gönderildi!</h3>
+                            <p style="color: var(--text-gray); font-size: 18px;">En kısa sürede size dönüş yapacağız.</p>
+                        </div>
+                    `;
+                }, 500);
+            });
+        }
+
+        // =============================================
+        // NETLİFY IDENTITY - GİRİŞ SONRASI YÖNLENDİRME
+        // =============================================
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>
