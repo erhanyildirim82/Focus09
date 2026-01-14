@@ -1,0 +1,48 @@
+{
+  "category": "Web Tasarım & Geliştirme",
+  "icon": "💻",
+  "order": 3,
+  "packages": [
+    {
+      "name": "Temel Web Sitesi",
+      "price": "10.000 TL",
+      "featured": false,
+      "features": [
+        "5 sayfalık responsive tasarım",
+        "WordPress altyapısı",
+        "Temel SEO ayarları",
+        "İletişim formu",
+        "Sosyal medya entegrasyonu",
+        "1 ay ücretsiz teknik destek"
+      ]
+    },
+    {
+      "name": "E-Ticaret Paketi",
+      "price": "20.000 TL",
+      "featured": true,
+      "features": [
+        "Tam fonksiyonel e-ticaret sitesi",
+        "50 ürüne kadar giriş",
+        "Ödeme sistemi entegrasyonu",
+        "Mobil uyumlu tasarım",
+        "Kapsamlı SEO çalışması",
+        "3 ay ücretsiz teknik destek",
+        "Temel dijital pazarlama danışmanlığı"
+      ]
+    },
+    {
+      "name": "Özel Kurumsal Site",
+      "price": "30.000 TL",
+      "featured": false,
+      "features": [
+        "Tamamen özel tasarım",
+        "Sınırsız sayfa",
+        "İleri düzey SEO optimizasyonu",
+        "Çoklu dil desteği",
+        "Özel fonksiyonlar ve entegrasyonlar",
+        "6 ay ücretsiz teknik destek",
+        "Dijital pazarlama stratejisi"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "category": "Reklam-Tanıtım Film Çekimi",
+  "icon": "🎬",
+  "order": 1,
+  "packages": [
+    {
+      "name": "Temel Paket",
+      "price": "6.000 TL",
+      "featured": false,
+      "features": [
+        "1 günlük çekim (8 saat)",
+        "Profesyonel kamera ekipmanı",
+        "Temel ışıklandırma",
+        "Temel ses kaydı",
+        "1-2 dakikalık montajlı video",
+        "2 revizyon hakkı"
+      ]
+    },
+    {
+      "name": "Standart Paket",
+      "price": "11.000 TL",
+      "featured": true,
+      "features": [
+        "2 günlük çekim (toplam 16 saat)",
+        "Profesyonel kamera ve ışık ekipmanları",
+        "Profesyonel ses kaydı",
+        "2-3 dakikalık montajlı video",
+        "3 revizyon hakkı",
+        "Sosyal medya için kısa versiyonlar"
+      ]
+    },
+    {
+      "name": "Premium Paket",
+      "price": "18.000 TL",
+      "featured": false,
+      "features": [
+        "3 günlük çekim (toplam 24 saat)",
+        "Tam profesyonel ekipman seti",
+        "Profesyonel ses kaydı ve ses tasarımı",
+        "Senaryo desteği",
+        "3-5 dakikalık montajlı video",
+        "Sınırsız revizyon hakkı",
+        "Tüm sosyal medya platformları için özel versiyonlar"
+      ]
+    }
+  ]
+}

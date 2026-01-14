@@ -1,0 +1,45 @@
+{
+  "category": "Sosyal Medya Yönetimi",
+  "icon": "📱",
+  "order": 2,
+  "packages": [
+    {
+      "name": "Başlangıç Paketi",
+      "price": "2.500 TL/ay",
+      "featured": false,
+      "features": [
+        "2 sosyal medya platformu yönetimi",
+        "Haftalık 6 içerik paylaşımı",
+        "Aylık analiz raporu",
+        "Yorumlara cevap verme"
+      ]
+    },
+    {
+      "name": "Gelişmiş Paket",
+      "price": "5.000 TL/ay",
+      "featured": true,
+      "features": [
+        "3 sosyal medya platformu yönetimi",
+        "Haftalık 10 içerik paylaşımı",
+        "Özel grafik tasarımlar",
+        "Aylık detaylı analiz raporu",
+        "7/24 yorum ve mesaj yönetimi",
+        "Aylık strateji toplantısı"
+      ]
+    },
+    {
+      "name": "Kurumsal Paket",
+      "price": "8.000 TL/ay",
+      "featured": false,
+      "features": [
+        "5 sosyal medya platformu yönetimi",
+        "Günlük içerik paylaşımı",
+        "Özel video ve grafik içerikler",
+        "Reklamların yönetimi",
+        "Rakip analizi",
+        "Haftalık detaylı raporlama",
+        "Kriz yönetimi"
+      ]
+    }
+  ]
+}
